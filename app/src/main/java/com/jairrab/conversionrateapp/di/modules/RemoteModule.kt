@@ -29,7 +29,7 @@ abstract class RemoteModule {
 
             return RetrofitFactory.makeRetrofitTestClient(
                 apiKey = sharedPreferences.getString(API_KEY, null)
-                         ?: "80d387989056df5129d26447a3918039",
+                         ?: "e48f0be3ac9a1f7c94ecf91bd729e935",
                 isDebug = BuildConfig.DEBUG,
                 networkUtils = networkUtils,
                 cacheDir = application.cacheDir
