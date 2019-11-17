@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.jairrab.conversionrateapp"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+        testInstrumentationRunner "com.jairrab.conversionrateapp.test.TestRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':presentation')
+    implementation project(':Domain')
+    implementation project(':Data')
+    implementation project(':cache')
+    implementation project(':Remote')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version"
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompat_version"
+    implementation "androidx.core:core-ktx:$rootProject.ktx_version"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraint_layout_version"
+
+    implementation "com.google.android.material:material:$rootProject.material_version"
+
+    implementation "androidx.cardview:cardview:$rootProject.cardview_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_fragment_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.nav_fragment_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle_version"
+    implementation "androidx.preference:preference-ktx:$rootProject.ktx_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swiperefreshlayout_version"
+
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
+
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid_version"
+
+    //debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version"
+
+    testImplementation "junit:junit:$rootProject.junit_version"
+
+    androidTestImplementation "androidx.test:runner:$rootProject.androidx_test_runner_version"
+    androidTestImplementation("androidx.test:rules:$rootProject.androidx_test_runner_version")
+
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espresso_version"
+
+    androidTestImplementation  "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.mockito_kotlin_version"
+    androidTestImplementation  "org.mockito:mockito-android:$rootProject.mockito_android_version"
+
+    kaptTest "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentMainView">
+
+    <fragment
+        android:id="@+id/fragmentMainView"
+        android:name="com.jairrab.conversionrateapp.ui.mainview.MainView"
+        android:label="MainView"
+        tools:layout="@layout/main_view">
+
+        <action
+            android:id="@+id/mainView_to_selectionView"
+            app:destination="@id/currencySelectionView"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/currency_selection"
+        android:id="@+id/currencySelectionView"
+        android:name="com.jairrab.conversionrateapp.ui.selectcurrencyview.SelectCurrencyView"
+        android:label="CurrencySelectionView" />
+
+</navigation>

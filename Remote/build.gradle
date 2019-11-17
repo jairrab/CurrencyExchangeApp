@@ -1,0 +1,48 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':Data')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit_version"
+
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp_version"
+
+    implementation "javax.inject:javax.inject:$rootProject.javax_inject_version"
+
+    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxkotlin_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava_version"
+
+    testImplementation "junit:junit:$rootProject.junit_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.mockito_kotlin_version"
+}
+
+javaSourceCompatibility
+targetCompatibility = "$rootProject.javaTargetCompatibility"
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "$rootProject.jvmTarget"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "$rootProject.jvmTarget"
+    }
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jairrab.presentation.MainViewModel" />
+
+        <variable
+            name="item"
+            type="com.jairrab.conversionrateapp.ui.mainview.model.CurrencyItem" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="?selectableItemBackground"
+        android:gravity="center"
+        android:onClick="@{()->viewModel.onCurrencyCellSelected(item.currency,item.rate)}"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/currencyTV"
+            android:layout_width="wrap_content"
+            android:textColor="@color/color_bluegrey_500"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:setCurrency="@{item.currency}"
+            tools:text="USD" />
+
+        <TextView
+            android:id="@+id/rateTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textColor="?android:textColorPrimary"
+            android:maxLines="1"
+            android:textSize="18sp"
+            app:setRate="@{item.rate}"
+            tools:text="51.50" />
+
+    </LinearLayout>
+
+</layout>

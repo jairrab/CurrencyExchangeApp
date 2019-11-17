@@ -1,0 +1,83 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext{
+        //App version
+        versionCode = 1
+        versionName = '1.0'
+
+        //SDK and tools
+        compileSdkVersion = 29
+        minSdkVersion = 21
+        targetSdkVersion = 29
+        buildToolsVersion = '29.0.2'
+
+        //Classpath
+        gradle_version = '3.5.0'
+        google_services_version = '4.3.1'
+        kotlin_version = '1.3.60'
+
+        //Android Libraries
+        appcompat_version = '1.1.0'
+        ktx_version = '1.1.0'
+        lifecycle_version = '2.1.0'
+        viewmodel_version = '2.2.0-rc02'
+        room_version = '2.2.1'
+        constraint_layout_version = '1.1.3'
+        cardview_version = '1.0.0'
+        nav_fragment_version = '2.2.0-rc02'
+        viewpager2_version = '1.0.0-beta05'
+        swiperefreshlayout_version = '1.0.0'
+        coroutines_android_version ='1.3.0'
+        material_version ='1.2.0-alpha01'
+
+        //3rd Party Libraries
+        javax_inject_version = '1'
+        dagger_version = '2.22.1'
+        retrofit_version = '2.6.0'
+        okhttp_version = '3.12.3'
+        rxandroid_version = '2.1.1'
+        rxkotlin_version = '2.3.0'
+        rxjava_version = '2.2.9'
+        leakcanary_version = '2.0-beta-3'
+        kotlin_serialization_version = '0.11.1'
+
+        //Test Libraries
+        junit_version = '4.12'
+        androidx_test_runner_version = '1.2.0'
+        espresso_version = '3.2.0'
+        mockito_kotlin_version = '2.1.0'
+        mockito_android_version = '2.27.0'
+
+        android_arch_core_testing_version = '1.1.1'
+        androidx_core_testing_version = '1.2.0'
+        androidx_junit_version = '1.1.1'
+
+        javaSourceCompatibility = '7'
+        javaTargetCompatibility = '7'
+        jvmTarget = '1.8'
+    }
+
+
+    repositories {
+        google()
+        jcenter()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

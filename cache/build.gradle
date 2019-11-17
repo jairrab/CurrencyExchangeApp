@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':Data')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version"
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompat_version"
+    implementation "androidx.core:core-ktx:$rootProject.ktx_version"
+
+    api "androidx.room:room-runtime:$rootProject.room_version" //see https://stackoverflow.com/a/55258780/7960756
+    implementation "androidx.room:room-rxjava2:$rootProject.room_version"
+    kapt "androidx.room:room-compiler:$rootProject.room_version"
+
+    implementation "javax.inject:javax.inject:$rootProject.javax_inject_version"
+
+    implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.rxkotlin_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava_version"
+
+    implementation "com.google.code.gson:gson:2.8.6"
+
+    testImplementation "junit:junit:$rootProject.junit_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso_version"
+
+    testImplementation "org.robolectric:robolectric:4.3"
+    testImplementation "android.arch.core:core-testing:$rootProject.android_arch_core_testing_version"
+    testImplementation "androidx.test:core:$rootProject.androidx_core_testing_version"
+    testImplementation "androidx.test.ext:junit:$rootProject.androidx_junit_version"
+}

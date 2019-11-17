@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Presentation</string>
+    <string name="network_error">Network error. Please check your internet connection.</string>
+    <string name="first_time_setup">First time setup, this will not take long. Please wait…</string>
+    <string name="error_message">Error:\n\n%s</string>
+    <string name="restart_to_use_key">Please restart app to use new access key</string>
+</resources>
