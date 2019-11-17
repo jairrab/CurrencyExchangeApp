@@ -28,7 +28,7 @@ import com.jairrab.presentation.event.EventObserver
 import com.jairrab.presentation.state.ChipViewState.*
 import com.jairrab.presentation.state.CurrencyViewState.OnCurrencySelection
 import com.jairrab.presentation.state.CurrencyViewState.UpdateText
-import com.jairrab.presentation.state.MainViewState.*
+import com.jairrab.presentation.state.NetworkApiState.*
 import javax.inject.Inject
 
 
@@ -83,12 +83,12 @@ class MainView : BaseFragment() {
 
         inputTv.setSelectAllOnFocus(true)
 
-        mainViewModel.loadPreferences()
+        mainViewModel.initialize()
     }
 
     private fun MainViewBinding.setupObservers() {
 
-        mainViewModel.mainViewState.observe(viewLifecycleOwner, EventObserver {
+        mainViewModel.networkApiState.observe(viewLifecycleOwner, EventObserver {
             when (it) {
                 is ExchangeRateReceived -> updateRecyclerView(it.exchangeRate)
                 ExchangeRateActionDone  -> activityViewModel.stopLoadingStatus()

@@ -6,8 +6,8 @@ import com.jairrab.domain.entities.ServerApiError
 import com.jairrab.domain.usecases.GetExchangeRate
 import com.jairrab.presentation.event.Event
 import com.jairrab.presentation.mapper.Mapper
-import com.jairrab.presentation.state.MainViewState
-import com.jairrab.presentation.state.MainViewState.*
+import com.jairrab.presentation.state.NetworkApiState
+import com.jairrab.presentation.state.NetworkApiState.*
 import com.jairrab.presentation.utils.getProperlyFormattedDecimal
 import io.reactivex.observers.DisposableObserver
 import java.net.UnknownHostException
@@ -23,7 +23,7 @@ class ExchangeRateProcessor @Inject constructor(
     fun getExchangeRate(
         inputCurrency: String,
         amount: Double,
-        updateState: (Event<MainViewState>) -> Unit
+        updateState: (Event<NetworkApiState>) -> Unit
     ) {
         lastAmount = amount
 
@@ -51,12 +51,12 @@ class ExchangeRateProcessor @Inject constructor(
 
     fun getExchangeRate(
         inputCurrency: String,
-        updateState: (Event<MainViewState>) -> Unit
+        updateState: (Event<NetworkApiState>) -> Unit
     ) = getExchangeRate(inputCurrency, lastAmount, updateState)
 
     fun updateAmount(
         amount: Double,
-        updateState: (Event<MainViewState>) -> Unit
+        updateState: (Event<NetworkApiState>) -> Unit
     ) {
         updateExchangeRate(lastExchangeRate, amount, updateState)
     }
@@ -65,7 +65,7 @@ class ExchangeRateProcessor @Inject constructor(
         return lastAmount.getProperlyFormattedDecimal()
     }
 
-    fun getCurrencies(updateState: (Event<MainViewState>) -> Unit) {
+    fun getCurrencies(updateState: (Event<NetworkApiState>) -> Unit) {
         val currencies = mapper.mapToCurrencies(lastExchangeRate)
         updateState(Event(CurrenciesRetrieved(currencies)))
     }
@@ -73,7 +73,7 @@ class ExchangeRateProcessor @Inject constructor(
     private fun updateExchangeRate(
         exchangeRate: ExchangeRate?,
         amount: Double,
-        updateState: (Event<MainViewState>) -> Unit
+        updateState: (Event<NetworkApiState>) -> Unit
     ) {
         lastAmount = amount
         lastExchangeRate = exchangeRate

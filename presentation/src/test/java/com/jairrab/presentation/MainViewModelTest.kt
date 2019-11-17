@@ -7,7 +7,7 @@ import com.jairrab.domain.usecases.GetExchangeRate
 import com.jairrab.presentation.helper.ChipProcessor
 import com.jairrab.presentation.helper.ExchangeRateProcessor
 import com.jairrab.presentation.mapper.Mapper
-import com.jairrab.presentation.state.MainViewState
+import com.jairrab.presentation.state.NetworkApiState
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.observers.DisposableObserver
 import org.junit.*
@@ -43,7 +43,7 @@ class MainViewModelTest {
     @Test
     fun loadPreferences() {
 
-        mainViewModel.loadPreferences()
+        mainViewModel.initialize()
 
         val exchangeRate = makeExchangeRate()
 
@@ -51,8 +51,8 @@ class MainViewModelTest {
 
         captor.firstValue.onNext(exchangeRate)
 
-        val expected = (mainViewModel.mainViewState.value?.peekContent()
-                as? MainViewState.ExchangeRateReceived)?.exchangeRate
+        val expected = (mainViewModel.networkApiState.value?.peekContent()
+                as? NetworkApiState.ExchangeRateReceived)?.exchangeRate
 
         Assert.assertEquals(exchangeRate, expected)
     }
@@ -70,8 +70,8 @@ class MainViewModelTest {
 
         captor.firstValue.onNext(exchangeRate)
 
-        val expected = (mainViewModel.mainViewState.value?.peekContent()
-                as? MainViewState.ExchangeRateReceived)?.exchangeRate
+        val expected = (mainViewModel.networkApiState.value?.peekContent()
+                as? NetworkApiState.ExchangeRateReceived)?.exchangeRate
 
         Assert.assertEquals(exchangeRate, expected)
     }

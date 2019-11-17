@@ -14,7 +14,7 @@ import com.jairrab.presentation.state.ChipViewState
 import com.jairrab.presentation.state.CurrencyViewState
 import com.jairrab.presentation.state.CurrencyViewState.OnCurrencySelection
 import com.jairrab.presentation.state.CurrencyViewState.UpdateText
-import com.jairrab.presentation.state.MainViewState
+import com.jairrab.presentation.state.NetworkApiState
 import com.jairrab.presentation.utils.PreferenceKeys
 import com.jairrab.presentation.utils.getProperlyFormattedDecimal
 import kotlinx.coroutines.Job
@@ -29,8 +29,8 @@ class MainViewModel @Inject constructor(
     private val chipProcessor: ChipProcessor
 ) : ViewModel() {
 
-    private val _mainViewState = MutableLiveData<Event<MainViewState>>()
-    val mainViewState: LiveData<Event<MainViewState>> = _mainViewState
+    private val _networkApiState = MutableLiveData<Event<NetworkApiState>>()
+    val networkApiState: LiveData<Event<NetworkApiState>> = _networkApiState
 
     private val _amountViewObservable = MutableLiveData<String>()
     val amountViewObservable: LiveData<String> = _amountViewObservable
@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
     private var debounceJob: Job? = null
     private var skipAmountTwoWayBindingListener = false
 
-    fun loadPreferences() {
+    fun initialize() {
         skipAmountTwoWayBindingListener = true
 
         //initialize last amount
@@ -67,7 +67,7 @@ class MainViewModel @Inject constructor(
         chipProcessor.initialize(currency) { _chipViewObservable.value = it }
 
         //gets initial rates
-        exchangeRateProcessor.getExchangeRate(currency, amount) { _mainViewState.value = it }
+        exchangeRateProcessor.getExchangeRate(currency, amount) { _networkApiState.value = it }
     }
 
     //region Two-Way Data Binding for Amount Input Entry
@@ -88,7 +88,7 @@ class MainViewModel @Inject constructor(
                 preferences.edit { putString(PreferenceKeys.LAST_AMOUNT, text) }
 
                 val amount = if (text.isEmpty()) 1.0 else text.toDouble()
-                exchangeRateProcessor.updateAmount(amount) { _mainViewState.value = it }
+                exchangeRateProcessor.updateAmount(amount) { _networkApiState.value = it }
 
                 _cancelViewObservable.postValue(amount != 1.0)
             }
@@ -99,7 +99,7 @@ class MainViewModel @Inject constructor(
     //endregion
 
     fun onCurrencyButtonClicked() {
-        exchangeRateProcessor.getCurrencies { _mainViewState.value = it }
+        exchangeRateProcessor.getCurrencies { _networkApiState.value = it }
         _currencyViewObservable.value = Event(OnCurrencySelection)
     }
 
@@ -109,7 +109,7 @@ class MainViewModel @Inject constructor(
         _currencyViewObservable.postValue(Event(UpdateText(currency)))
 
         chipProcessor.processChip(currency) { _chipViewObservable.value = it }
-        exchangeRateProcessor.getExchangeRate(currency) { _mainViewState.value = it }
+        exchangeRateProcessor.getExchangeRate(currency) { _networkApiState.value = it }
     }
 
     fun onCurrencyCellSelected(currency: String, amount: Double) {
@@ -125,7 +125,7 @@ class MainViewModel @Inject constructor(
         _cancelViewObservable.postValue(amount != 1.0)
 
         chipProcessor.processChip(currency) { _chipViewObservable.value = it }
-        exchangeRateProcessor.getExchangeRate(currency, amount) { _mainViewState.value = it }
+        exchangeRateProcessor.getExchangeRate(currency, amount) { _networkApiState.value = it }
     }
 
     fun onCancelClicked() {
@@ -138,7 +138,7 @@ class MainViewModel @Inject constructor(
         _amountViewObservable.postValue(amount.getProperlyFormattedDecimal())
         _cancelViewObservable.postValue(false)
 
-        exchangeRateProcessor.updateAmount(amount) { _mainViewState.value = it }
+        exchangeRateProcessor.updateAmount(amount) { _networkApiState.value = it }
     }
 
     override fun onCleared() {
