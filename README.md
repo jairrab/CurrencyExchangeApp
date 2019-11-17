@@ -139,7 +139,7 @@ This module is purely a Kotlin library with **NO Android dependencies**. This mo
 * The free `CurrencyLayer` API only allows for USD as the input source. If the source is other than USD, perform a currency rate conversion by calculating the exchange rate between the source currency and it's USD rate equivalent. `RxJava` `BiFunction` is used to take the two parameters, perform calculations and emit the needed exchange rates.
 
 **Log Output**
-* As you can see, the first time the app was run, it detected that cache was more than 30 minutes, and thus retrieving the exchange rate information from the remote server.
+* As seen below, the first time the app was run, it detected that cache was more than 30 minutes, and thus retrieving the exchange rate information from the remote server.
 ```
 I/System.out: ^^ Cache: getting timestamp
 I/System.out: ^^ Cache data is 26231406.5789 minutes old
