@@ -23,7 +23,9 @@
             android:layout_marginEnd="16dp"
             android:background="@color/color_white"
             android:elevation="4dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/chip_vg"
