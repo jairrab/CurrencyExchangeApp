@@ -91,7 +91,7 @@ class MainView : BaseFragment() {
         mainViewModel.networkApiState.observe(viewLifecycleOwner, EventObserver {
             when (it) {
                 is ExchangeRateReceived -> updateRecyclerView(it.exchangeRate)
-                ExchangeRateActionDone  -> activityViewModel.stopLoadingStatus()
+                ExchangeRateActionDone  -> finalizeDisplayUi()
                 is CurrenciesRetrieved  -> activityViewModel.updateCurrencies(it.currencies)
                 NetworkError            -> processError { activityViewModel.showNetworkErrorMessage() }
                 is ApiError             -> processError { activityViewModel.showApiKeyError(it.message) }
@@ -133,8 +133,12 @@ class MainView : BaseFragment() {
         (recyclerView.adapter as CurrencyRatesAdapter).submitList(currencyItems)
     }
 
-    private fun MainViewBinding.addChipView(currency: String) {
+    private fun MainViewBinding.finalizeDisplayUi() {
+        activityViewModel.stopLoadingStatus()
+        displayView.visibility = View.VISIBLE
+    }
 
+    private fun MainViewBinding.addChipView(currency: String) {
         val chip = Chip(context).apply {
             text = currency
             setTextColor(Color.WHITE)
