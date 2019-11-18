@@ -146,9 +146,11 @@ class MainView : BaseFragment() {
     }
 
     private fun MainViewBinding.removeChip(currency: String) {
-        chipGroup.removeView(chipGroup.children.first {
+        val chipToRemove = chipGroup.children.first {
             (it as Chip).text.toString() == currency
-        })
+        }
+
+        chipGroup.removeView(chipToRemove)
     }
 
     private fun MainViewBinding.processError(doError: () -> Unit) {
