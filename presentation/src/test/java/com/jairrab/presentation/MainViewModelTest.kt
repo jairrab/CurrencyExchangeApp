@@ -20,6 +20,7 @@ class MainViewModelTest {
     private val editor = mock<SharedPreferences.Editor>()
 
     private lateinit var mainViewModel: MainViewModel
+    private val mapper = Mapper()
 
     @get:Rule var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -31,7 +32,7 @@ class MainViewModelTest {
         mainViewModel = MainViewModel(
             getExchangeRate = getExchangeRate,
             preferences = preferences,
-            exchangeRateProcessor = ExchangeRateProcessor(getExchangeRate, Mapper()),
+            exchangeRateProcessor = ExchangeRateProcessor(getExchangeRate, mapper),
             chipProcessor = ChipProcessor(preferences)
         )
     }
@@ -41,7 +42,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun loadPreferences() {
+    fun initialize() {
 
         mainViewModel.initialize()
 
@@ -51,10 +52,12 @@ class MainViewModelTest {
 
         captor.firstValue.onNext(exchangeRate)
 
-        val expected = (mainViewModel.networkApiState.value?.peekContent()
-                as? NetworkApiState.ExchangeRateReceived)?.exchangeRate
+        val actual = (mainViewModel.networkApiState.value?.peekContent()
+                as? NetworkApiState.ExchangeRateReceived)?.currencyRates
 
-        Assert.assertEquals(exchangeRate, expected)
+        val expected = mapper.mapToCurrencyRates(exchangeRate)
+
+        Assert.assertEquals(expected, actual)
     }
 
     @Test
@@ -70,10 +73,12 @@ class MainViewModelTest {
 
         captor.firstValue.onNext(exchangeRate)
 
-        val expected = (mainViewModel.networkApiState.value?.peekContent()
-                as? NetworkApiState.ExchangeRateReceived)?.exchangeRate
+        val actual = (mainViewModel.networkApiState.value?.peekContent()
+                as? NetworkApiState.ExchangeRateReceived)?.currencyRates
 
-        Assert.assertEquals(exchangeRate, expected)
+        val expected = mapper.mapToCurrencyRates(exchangeRate)
+
+        Assert.assertEquals(expected, actual)
     }
 
     @Test
