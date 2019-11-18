@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.jairrab.domain.entities.ExchangeRate
 import com.jairrab.domain.usecases.GetExchangeRate
-import com.jairrab.presentation.helper.ChipProcessor
+import com.jairrab.presentation.helper.HistoryProcessor
 import com.jairrab.presentation.helper.ExchangeRateProcessor
 import com.jairrab.presentation.mapper.Mapper
 import com.jairrab.presentation.state.NetworkApiState
@@ -33,7 +33,7 @@ class MainViewModelTest {
             getExchangeRate = getExchangeRate,
             preferences = preferences,
             exchangeRateProcessor = ExchangeRateProcessor(getExchangeRate, mapper),
-            chipProcessor = ChipProcessor(preferences)
+            historyProcessor = HistoryProcessor(preferences)
         )
     }
 

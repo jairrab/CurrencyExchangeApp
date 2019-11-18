@@ -24,7 +24,7 @@ import com.jairrab.presentation.ActivityViewModel
 import com.jairrab.presentation.MainViewModel
 import com.jairrab.presentation.event.EventObserver
 import com.jairrab.presentation.model.CurrencyRate
-import com.jairrab.presentation.state.ChipViewState.*
+import com.jairrab.presentation.state.HistoryViewState.*
 import com.jairrab.presentation.state.CurrencyViewState.OnCurrencySelection
 import com.jairrab.presentation.state.CurrencyViewState.UpdateText
 import com.jairrab.presentation.state.NetworkApiState.*
@@ -112,12 +112,12 @@ class MainView : BaseFragment() {
             cancelIv.showView(it)
         })
 
-        mainViewModel.chipViewObservable.observe(viewLifecycleOwner, EventObserver { state ->
+        mainViewModel.historyViewObservable.observe(viewLifecycleOwner, EventObserver { state ->
             when (state) {
-                is SetVisibility -> chipVg.showView(state.isVisible)
-                is AddChip       -> addChipView(state.currency)
-                is AddChips      -> state.currencies.forEach { addChipView(it) }
-                is RemoveChip    -> removeChip(state.currency)
+                is SetVisibility     -> chipVg.showView(state.isVisible)
+                is AddHistoryView    -> addChipView(state.currency)
+                is AddHistories      -> state.currencies.forEach { addChipView(it) }
+                is RemoveHistoryView -> removeChip(state.currency)
             }
         })
 

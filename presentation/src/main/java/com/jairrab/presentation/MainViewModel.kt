@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jairrab.domain.usecases.GetExchangeRate
 import com.jairrab.presentation.event.Event
-import com.jairrab.presentation.helper.ChipProcessor
+import com.jairrab.presentation.helper.HistoryProcessor
 import com.jairrab.presentation.helper.ExchangeRateProcessor
-import com.jairrab.presentation.state.ChipViewState
+import com.jairrab.presentation.state.HistoryViewState
 import com.jairrab.presentation.state.CurrencyViewState
 import com.jairrab.presentation.state.CurrencyViewState.OnCurrencySelection
 import com.jairrab.presentation.state.CurrencyViewState.UpdateText
@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
     private val getExchangeRate: GetExchangeRate,
     private val preferences: SharedPreferences,
     private val exchangeRateProcessor: ExchangeRateProcessor,
-    private val chipProcessor: ChipProcessor
+    private val historyProcessor: HistoryProcessor
 ) : ViewModel() {
 
     private val _networkApiState = MutableLiveData<Event<NetworkApiState>>()
@@ -41,8 +41,8 @@ class MainViewModel @Inject constructor(
     private val _cancelViewObservable = MutableLiveData<Boolean>()
     val cancelViewObservable: LiveData<Boolean> = _cancelViewObservable
 
-    private val _chipViewObservable = MutableLiveData<Event<ChipViewState>>()
-    val chipViewObservable: LiveData<Event<ChipViewState>> = _chipViewObservable
+    private val _historyViewObservable = MutableLiveData<Event<HistoryViewState>>()
+    val historyViewObservable: LiveData<Event<HistoryViewState>> = _historyViewObservable
 
     var currency = ""
 
@@ -63,8 +63,8 @@ class MainViewModel @Inject constructor(
         //initialize currency setting
         currency = preferences.getString(PreferenceKeys.LAST_CURRENCY, null) ?: "USD"
 
-        //initializes last currency chips
-        chipProcessor.initialize(currency) { _chipViewObservable.value = it }
+        //initializes currency history
+        historyProcessor.initialize(currency) { _historyViewObservable.value = it }
 
         //gets initial rates
         exchangeRateProcessor.getExchangeRate(currency, amount) { _networkApiState.value = it }
@@ -108,7 +108,7 @@ class MainViewModel @Inject constructor(
 
         _currencyViewObservable.postValue(Event(UpdateText(currency)))
 
-        chipProcessor.processChip(currency) { _chipViewObservable.value = it }
+        historyProcessor.processHistory(currency) { _historyViewObservable.value = it }
         exchangeRateProcessor.getExchangeRate(currency) { _networkApiState.value = it }
     }
 
@@ -124,7 +124,7 @@ class MainViewModel @Inject constructor(
         _amountViewObservable.postValue(newAmountText)
         _cancelViewObservable.postValue(amount != 1.0)
 
-        chipProcessor.processChip(currency) { _chipViewObservable.value = it }
+        historyProcessor.processHistory(currency) { _historyViewObservable.value = it }
         exchangeRateProcessor.getExchangeRate(currency, amount) { _networkApiState.value = it }
     }
 
