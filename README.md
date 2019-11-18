@@ -42,7 +42,7 @@ The main objective is to develop it using a modern architecture that is very com
 * Change currency by selecting a cell or clicking the currency button. (A)
 * The currency dialog offers a quick search functionality (B)
 * The table exchange rates automatically updates while typing on the keypad (C)
-* The app design supports an architecture that allows errors to be elegantly displayed to the UI when needed (D)
+* The app design supports an architecture that allows errors to be elegantly displayed to the UI when needed (D). Also, the app design allows (for development purposes) the user to update the CurrencyLayer API key. It has a 250 monthly request limit that can be easily exceeded during testing.
 * The app properly supports orientation changes by retaining view properties using `ViewModel`.
 * The app is using [CurrencyLayer](https://www.currencylayer.com) API for exchange rate information. Note that the free version of the API has many limitations, particularly the source currency cannot be changed from USD. Because of this, and to be able to convert between other currencies, additional calcualtions will need to be performed that involved calculating the rates by going from *source currency* to *USD rate* to *target currency*. This will be covered in more detail the `Data` layer section below.
 
