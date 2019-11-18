@@ -19,12 +19,11 @@ import com.jairrab.conversionrateapp.databinding.MainViewBinding
 import com.jairrab.conversionrateapp.databinding.MainViewBinding.inflate
 import com.jairrab.conversionrateapp.ui.base.BaseFragment
 import com.jairrab.conversionrateapp.ui.mainview.adapter.CurrencyRatesAdapter
-import com.jairrab.conversionrateapp.ui.mapper.Mapper
 import com.jairrab.conversionrateapp.ui.utils.showView
-import com.jairrab.domain.entities.ExchangeRate
 import com.jairrab.presentation.ActivityViewModel
 import com.jairrab.presentation.MainViewModel
 import com.jairrab.presentation.event.EventObserver
+import com.jairrab.presentation.model.CurrencyRate
 import com.jairrab.presentation.state.ChipViewState.*
 import com.jairrab.presentation.state.CurrencyViewState.OnCurrencySelection
 import com.jairrab.presentation.state.CurrencyViewState.UpdateText
@@ -35,7 +34,6 @@ import javax.inject.Inject
 class MainView : BaseFragment() {
 
     @Inject lateinit var mainViewModel: MainViewModel
-    @Inject lateinit var mapper: Mapper
 
     private val activityViewModel by activityViewModels<ActivityViewModel>()
     private var ratesRecyclerView: RecyclerView? = null
@@ -90,7 +88,7 @@ class MainView : BaseFragment() {
 
         mainViewModel.networkApiState.observe(viewLifecycleOwner, EventObserver {
             when (it) {
-                is ExchangeRateReceived -> updateRecyclerView(it.exchangeRate)
+                is ExchangeRateReceived -> updateRecyclerView(it.currencyRates)
                 ExchangeRateActionDone  -> finalizeDisplayUi()
                 is CurrenciesRetrieved  -> activityViewModel.updateCurrencies(it.currencies)
                 NetworkError            -> processError { activityViewModel.showNetworkErrorMessage() }
@@ -128,9 +126,8 @@ class MainView : BaseFragment() {
         })
     }
 
-    private fun MainViewBinding.updateRecyclerView(exchangeRate: ExchangeRate?) {
-        val currencyItems = mapper.mapToCurrencyItems(exchangeRate)
-        (recyclerView.adapter as CurrencyRatesAdapter).submitList(currencyItems)
+    private fun MainViewBinding.updateRecyclerView(currencyRates: List<CurrencyRate>?) {
+        (recyclerView.adapter as CurrencyRatesAdapter).submitList(currencyRates)
     }
 
     private fun MainViewBinding.finalizeDisplayUi() {

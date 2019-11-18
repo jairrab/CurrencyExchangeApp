@@ -1,6 +1,7 @@
 package com.jairrab.presentation.mapper
 
 import com.jairrab.domain.entities.ExchangeRate
+import com.jairrab.presentation.model.CurrencyRate
 import java.util.*
 import javax.inject.Inject
 
@@ -27,6 +28,13 @@ class Mapper @Inject constructor() {
             }?.toMap()
 
             ExchangeRate(exchangeRate.source, amountMap, exchangeRate.timestamp)
+        }
+    }
+
+    fun mapToCurrencyRates(exchangeRate: ExchangeRate?): List<CurrencyRate>? {
+
+        return exchangeRate?.quotes?.map {
+            CurrencyRate(it.key, it.value)
         }
     }
 

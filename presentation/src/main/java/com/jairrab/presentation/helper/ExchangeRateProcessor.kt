@@ -78,8 +78,9 @@ class ExchangeRateProcessor @Inject constructor(
         lastAmount = amount
         lastExchangeRate = exchangeRate
 
-        val rates = mapper.mapToConvertedExchangeRate(exchangeRate, amount)
+        val currencyRates = mapper.mapToConvertedExchangeRate(exchangeRate, amount)
+            .let { mapper.mapToCurrencyRates(it) }
 
-        updateState(Event(ExchangeRateReceived(rates)))
+        updateState(Event(ExchangeRateReceived(currencyRates)))
     }
 }

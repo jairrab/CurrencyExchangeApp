@@ -1,10 +1,10 @@
 package com.jairrab.presentation.state
 
-import com.jairrab.domain.entities.ExchangeRate
+import com.jairrab.presentation.model.CurrencyRate
 
 sealed class NetworkApiState {
 
-    class ExchangeRateReceived(val exchangeRate: ExchangeRate?) : NetworkApiState()
+    class ExchangeRateReceived(val currencyRates: List<CurrencyRate>?) : NetworkApiState()
 
     class CurrenciesRetrieved(val currencies: List<String>) : NetworkApiState()
 

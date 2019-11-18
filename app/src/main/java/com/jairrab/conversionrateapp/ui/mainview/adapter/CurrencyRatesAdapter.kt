@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.jairrab.presentation.MainViewModel
 import com.jairrab.conversionrateapp.databinding.ItemCurrencyRateBinding.inflate
-import com.jairrab.conversionrateapp.ui.mainview.model.CurrencyItem
+import com.jairrab.presentation.MainViewModel
+import com.jairrab.presentation.model.CurrencyRate
 
 
 class CurrencyRatesAdapter(private val viewModel: MainViewModel) :
-    ListAdapter<CurrencyItem, ItemViewHolder>(COMPARE) {
+    ListAdapter<CurrencyRate, ItemViewHolder>(COMPARE) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
 
@@ -25,16 +25,16 @@ class CurrencyRatesAdapter(private val viewModel: MainViewModel) :
     }
 
     companion object {
-        private val COMPARE = object : DiffUtil.ItemCallback<CurrencyItem>() {
+        private val COMPARE = object : DiffUtil.ItemCallback<CurrencyRate>() {
             override fun areItemsTheSame(
-                oldItem: CurrencyItem,
-                newItem: CurrencyItem
+                oldItem: CurrencyRate,
+                newItem: CurrencyRate
             ): Boolean =
                 oldItem.currency == newItem.currency
 
             override fun areContentsTheSame(
-                oldItem: CurrencyItem,
-                newItem: CurrencyItem
+                oldItem: CurrencyRate,
+                newItem: CurrencyRate
             ): Boolean =
                 oldItem == newItem
         }

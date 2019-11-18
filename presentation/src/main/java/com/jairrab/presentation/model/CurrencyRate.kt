@@ -1,6 +1,6 @@
-package com.jairrab.conversionrateapp.ui.mainview.model
+package com.jairrab.presentation.model
 
-data class CurrencyItem(
+data class CurrencyRate(
     val currency: String,
     val rate: Double
 ) {
@@ -8,7 +8,7 @@ data class CurrencyItem(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as CurrencyItem
+        other as CurrencyRate
 
         if (currency != other.currency) return false
         if (rate != other.rate) return false

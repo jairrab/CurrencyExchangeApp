@@ -10,7 +10,7 @@
 
         <variable
             name="item"
-            type="com.jairrab.conversionrateapp.ui.mainview.model.CurrencyItem" />
+            type="com.jairrab.presentation.model.CurrencyRate" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,8 +24,8 @@
         <TextView
             android:id="@+id/currencyTV"
             android:layout_width="wrap_content"
-            android:textColor="@color/color_bluegrey_500"
             android:layout_height="wrap_content"
+            android:textColor="@color/color_bluegrey_500"
             android:textSize="12sp"
             android:textStyle="bold"
             app:setCurrency="@{item.currency}"
@@ -36,8 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:textColor="?android:textColorPrimary"
             android:maxLines="1"
+            android:textColor="?android:textColorPrimary"
             android:textSize="18sp"
             app:setRate="@{item.rate}"
             tools:text="51.50" />
