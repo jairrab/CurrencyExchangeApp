@@ -42,7 +42,7 @@ The main objective is to develop it using a modern architecture that is very com
 * Change currency by selecting a cell or clicking the currency button. (A)
 * The currency dialog offers a quick search functionality (B)
 * The table exchange rates automatically updates while typing on the keypad (C)
-* The app design supports an architecture that allows errors to be elegantly displayed to the UI when needed (D)
+* The app design supports an architecture that allows errors to be elegantly displayed to the UI when needed (D). Also, the app design allows (for development purposes) the user to update the CurrencyLayer API key. It has a 250 monthly request limit that can be easily exceeded during testing.
 * The app properly supports orientation changes by retaining view properties using `ViewModel`.
 * The app is using [CurrencyLayer](https://www.currencylayer.com) API for exchange rate information. Note that the free version of the API has many limitations, particularly the source currency cannot be changed from USD. Because of this, and to be able to convert between other currencies, additional calcualtions will need to be performed that involved calculating the rates by going from *source currency* to *USD rate* to *target currency*. This will be covered in more detail the `Data` layer section below.
 
@@ -68,7 +68,7 @@ This module is responsible for handling the user display components. The archite
 
 ### Presentation Module
 This module is responsible for making calls to the data sources, as well as coordinating the `LiveData` sources that helps coordinates the view elements on the `View` module. The `Presentation` module depends on the `Domain` layer. This module uses the following libraries and approaches:
-* `ViewModel` - store and manage UI-related data in a lifecycle conscious way. The ViewModel class allows data to survive configuration changes such as screen rotations. The ViewModels are instantiated using a Dagger module, outside of their owning activities and fragments. A custom ViewModelFactory is used to allow injecting dependencies into ViewModels.
+* `ViewModel` - store and manage UI-related data in a lifecycle conscious way. The ViewModel class allows data to survive configuration changes such as screen rotations. The ViewModels are instantiated using a Dagger module, outside of their owning activities and fragments. A custom ViewModelFactory is used to allow injecting dependencies into ViewModels. On this single activity architecture design, the ViewModels are also responsible for pasing data between fragments.
 * `LiveData` is used a lifecycle-aware observable that ensure view component observers are in active lifecycle. Note that only non-mutable LiveData are exposed to observers outside the `Presentation` module, which by design safely prevents outside components from changing the state of the observable.
 * `RxJava` -  used to instantiate observers and pass it to call the `Domain` *use cases* where it would then be subscribed into. The `Domain` layer has no knowledge of it's observers in this scenario thus keeping it isolated from the rest of the program.
 * A common issue with LiveData is that its observers are getting re-notified even after orientation changes. To prevent cases we clearly do not want this behaviour, such as an error observer showing the same toast message after rotation, we are using a custom `EventObserver` that checks whether an event has not been handled previously before notifying it's observers.
